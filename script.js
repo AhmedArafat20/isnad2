@@ -29,6 +29,24 @@ document.querySelectorAll('.reveal').forEach(element => observer.observe(element
 
 const header = document.querySelector('.site-header');
 
+let lastScroll = window.scrollY;
+
 window.addEventListener('scroll', () => {
-  header.classList.toggle('scrolled', window.scrollY > 40);
+  const currentScroll = window.scrollY;
+
+  // إظهار الهيدر في أعلى الصفحة
+  if (currentScroll <= 80) {
+    header.classList.remove('nav-hidden');
+  }
+  // النزول لأسفل: إخفاء الهيدر
+  else if (currentScroll > lastScroll) {
+    header.classList.add('nav-hidden');
+  }
+  // الصعود لأعلى: إظهار الهيدر
+  else if (currentScroll < lastScroll) {
+    header.classList.remove('nav-hidden');
+  }
+
+  lastScroll = currentScroll;
 });
+

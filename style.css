@@ -1544,11 +1544,18 @@ p {
   width: 100%;
   z-index: 999;
   color: #fff;
-  background: rgba(16, 27, 28, 0.88);
+  background: rgba(16, 27, 28, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+
+  transform: translateY(0);
+  transition: transform 0.35s ease, background 0.3s ease;
+}
+
+/* إخفاء الهيدر */
+.site-header.nav-hidden {
+  transform: translateY(-110%);
 }
 
 .site-header.scrolled {
