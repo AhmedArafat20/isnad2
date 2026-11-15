@@ -1,67 +1,27 @@
-// Mobile Navigation
-const menuToggle = document.getElementById("menuToggle");
-const mainNav = document.getElementById("mainNav");
+const menuButton = document.querySelector('.menu-toggle');
+const nav = document.querySelector('.main-nav');
 
-menuToggle.addEventListener("click", () => {
-  const isOpen = mainNav.classList.toggle("open");
-
-  menuToggle.setAttribute("aria-expanded", String(isOpen));
-  menuToggle.textContent = isOpen ? "×" : "☰";
+menuButton.addEventListener('click', () => {
+  const isOpen = nav.classList.toggle('open');
+  menuButton.setAttribute('aria-expanded', String(isOpen));
 });
 
-// Close menu after clicking a link
-mainNav.querySelectorAll("a").forEach(link => {
-  link.addEventListener("click", () => {
-    mainNav.classList.remove("open");
-
-    menuToggle.setAttribute("aria-expanded", "false");
-    menuToggle.textContent = "☰";
+document.querySelectorAll('.main-nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    nav.classList.remove('open');
+    menuButton.setAttribute('aria-expanded', 'false');
   });
 });
 
-// Automatic Copyright Year
-document.getElementById("year").textContent =
-  new Date().getFullYear();
+document.getElementById('year').textContent = new Date().getFullYear();
 
-// Back To Top Button
-const backTop = document.getElementById("backTop");
-
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 450) {
-    backTop.classList.add("show");
-  } else {
-    backTop.classList.remove("show");
-  }
-});
-
-backTop.addEventListener("click", () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
   });
-});
+}, { threshold: 0.12 });
 
-// WhatsApp Contact Form
-document.getElementById("contactForm").addEventListener("submit", event => {
-  event.preventDefault();
-
-  const data = new FormData(event.currentTarget);
-
-  const name = data.get("name");
-  const city = data.get("city");
-  const project = data.get("project");
-  const message = data.get("message") || "لا توجد تفاصيل إضافية";
-
-  const whatsappMessage =
-    `السلام عليكم، أرغب في الاستفسار عن خدمات إسناد للمطابخ.
-
-الاسم: ${name}
-المدينة: ${city}
-نوع المشروع: ${project}
-التفاصيل: ${message}`;
-
-  const whatsappURL =
-    `https://wa.me/966530335785?text=${encodeURIComponent(whatsappMessage)}`;
-
-  window.open(whatsappURL, "_blank", "noopener");
-});
+document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
